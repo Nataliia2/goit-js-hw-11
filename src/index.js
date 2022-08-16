@@ -27,12 +27,12 @@ const totalPages = 500 / perPage;
 console.log(totalPages);
 
 
-refs.buttonLoad.classList.add('invisible');
+refs.buttonLoad.classList.add('ishidden');
 
 
 async function fetchImages() {
     try {
-        const response = await axios.get(`${BASE_URL}?key=29221253-dd17a46566e1be23f7ca8ff9b&image_type=photo&orientation=horizontal&safesearch=true&q=${nameSearch}&page=${currentPage}&per_page=${perPage}`);
+        const response = await axios.get(`${BASE_URL}?key=29320535-0299dbdcd796402aab516fa97&image_type=photo&orientation=horizontal&safesearch=true&q=${nameSearch}&page=${currentPage}&per_page=${perPage}`);
          const arrayImages = await response.data.hits;
 
         if(arrayImages.length === 0) {
@@ -63,7 +63,7 @@ nameSearch;
       currentPage += 1;
     }).catch(error => (console.log(error)))
 
-    refs.buttonLoad.classList.remove('invisible')
+    refs.buttonLoad.classList.remove('ishidden');
  
     lightbox = new SimpleLightbox('.gallery a', {
         captionsData: 'alt',
@@ -75,8 +75,8 @@ nameSearch;
 
 function onLoadMoreBtn(){
     if (currentPage > totalPages) {
-        refs.buttonLoad.classList.add('invisible');
-        return toggleAlertPopup()
+        refs.buttonLoad.classList.add('ishidden');
+        return toggleAlertPopup();
     }
 
     nameSearch = refs.input.value;
@@ -86,8 +86,6 @@ function onLoadMoreBtn(){
       insertMarkup(images);   
       currentPage += 1;})
     .catch(error => (console.log(error)))
-
-    // lightbox.refresh();
 }
 
 
@@ -112,7 +110,7 @@ const createMarkup = img => `
         </div>
     </div>
 `;
-      
+
 
 function generateMarkup(  { arrayImages, totalHits }) {
     if (currentPage === 1) {
