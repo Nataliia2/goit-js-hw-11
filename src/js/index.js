@@ -27,23 +27,25 @@ const lightbox = new SimpleLightbox('.gallery a', {captionsData: 'alt', captionP
     
 function onFormSubmit(e) {    
 e.preventDefault()
-refs.buttonLoad.classList.remove('ishidden');
+
 
 const searchName = e.currentTarget.elements.searchQuery.value.trim();
+if (currentPage > 0 ) {
 clearGalleryList();
 currentPage = 1;
-generateMarkup(searchName, currentPage); 
+fetchRequest (searchName, currentPage); 
+}
 }
 
 
 
 function onLoadMoreBtn(){
   currentPage += 1;
-  const searchName = refs.input.value.trim().toUpperCase();
-  generateMarkup(searchName, currentPage); 
+  const searchName = refs.input.value.trim();
+  fetchRequest(searchName, currentPage); 
 }
 
-async function generateMarkup (searchQuery, currentPage) {
+async function fetchRequest (searchQuery, currentPage) {
   try {
     const fetchResult = await fetchPictures(searchQuery, currentPage);  
     if (currentPage === 1) {
