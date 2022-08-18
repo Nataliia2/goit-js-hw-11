@@ -47,7 +47,7 @@ async function generateMarkup (searchQuery, currentPage) {
   try {
     const fetchResult = await fetchPictures(searchQuery, currentPage);  
     if (currentPage === 1) {
-      Notiflix.info(`Hooray! We found ${fetchResult.totalHits} images.`);
+      Notiflix.Notify.info(`Hooray! We found ${fetchResult.totalHits} images.`);
     }
     filterFetchResult(fetchResult);
 } catch (error) {console.log(error)}
@@ -57,13 +57,13 @@ function filterFetchResult(fetchResult) {
   if (currentPage === Math.ceil(fetchResult.totalHits / 40)) {
       insertMarkup(fetchResult.hits);  
       refs.buttonLoad.classList.add('ishidden');
-      Notiflix.info("We're sorry, but you've reached the end of search results.");
+      Notiflix.Notify.info("We're sorry, but you've reached the end of search results.");
       smoothScrollToBottomPage();
       lightbox.refresh();
       return;
   } else if (fetchResult.total === 0) {
       refs.buttonLoad.classList.add('ishidden');
-      Notiflix.failure("Sorry, there are no images matching your search query. Please try again.");   
+      Notiflix.Notify.failure("Sorry, there are no images matching your search query. Please try again.");   
       return;
   } else { 
       insertMarkup(fetchResult.hits);  
@@ -105,11 +105,11 @@ function  createMarkup (img) {
     </div>
 `}
 
-function generateMarkup (arrayImages) {
+function createList (arrayImages) {
   return arrayImages.reduce((acc, item) => acc + createMarkup(item), "");
 }
 function insertMarkup(arrayImages) {
-  const result = generateMarkup(arrayImages);
+  const result = createList(arrayImages);
  
   refs.gallery.insertAdjacentHTML('beforeend', result);
 
