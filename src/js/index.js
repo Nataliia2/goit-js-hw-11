@@ -19,7 +19,7 @@ refs.buttonLoad.addEventListener('click', onLoadMoreBtn);
 
 
 let currentPage = 1;
-let searchName = refs.input.value.trim();
+let searchName = '';
 refs.buttonLoad.classList.add('ishidden');
 const lightbox = new SimpleLightbox('.gallery a', {captionsData: 'alt', captionPosition: 'bottom', captionDelay: 250,});
 
@@ -30,7 +30,7 @@ function onFormSubmit(e) {
 e.preventDefault()
 refs.buttonLoad.classList.add('ishidden');
 
-const searchName = e.currentTarget.elements.searchQuery.value.trim();
+searchName = e.currentTarget.elements.searchQuery.value.trim();
 if (searchName === 0 ) {
   return;
 } else {
@@ -45,6 +45,7 @@ fetchRequest (searchName, currentPage);
 function onLoadMoreBtn(){
   refs.buttonLoad.classList.add('ishidden');
   currentPage += 1;
+  searchName = refs.input.value.trim();
   fetchRequest(searchName, currentPage); 
 }
 
