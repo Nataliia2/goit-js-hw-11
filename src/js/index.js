@@ -19,6 +19,7 @@ refs.buttonLoad.addEventListener('click', onLoadMoreBtn);
 
 
 let currentPage = 1;
+let searchName = refs.input.value.trim();
 refs.buttonLoad.classList.add('ishidden');
 const lightbox = new SimpleLightbox('.gallery a', {captionsData: 'alt', captionPosition: 'bottom', captionDelay: 250,});
 
@@ -27,10 +28,12 @@ const lightbox = new SimpleLightbox('.gallery a', {captionsData: 'alt', captionP
     
 function onFormSubmit(e) {    
 e.preventDefault()
-
+refs.buttonLoad.classList.add('ishidden');
 
 const searchName = e.currentTarget.elements.searchQuery.value.trim();
-if (currentPage > 0 ) {
+if (searchName === 0 ) {
+  return;
+} else {
 clearGalleryList();
 currentPage = 1;
 fetchRequest (searchName, currentPage); 
@@ -40,8 +43,8 @@ fetchRequest (searchName, currentPage);
 
 
 function onLoadMoreBtn(){
+  refs.buttonLoad.classList.add('ishidden');
   currentPage += 1;
-  const searchName = refs.input.value.trim();
   fetchRequest(searchName, currentPage); 
 }
 
@@ -84,6 +87,17 @@ function smoothScrollToBottomPage () {
   })
 }
 
+function insertMarkup(arrayImages) {
+  const result = createList(arrayImages);
+ 
+  refs.gallery.insertAdjacentHTML('beforeend', result);
+
+}
+
+function createList (arrayImages) {
+  return arrayImages.reduce((acc, item) => acc + createMarkup(item), "");
+}
+
 function  createMarkup (img) {
   return `
   <div class="photo-card">
@@ -107,15 +121,7 @@ function  createMarkup (img) {
     </div>
 `}
 
-function createList (arrayImages) {
-  return arrayImages.reduce((acc, item) => acc + createMarkup(item), "");
-}
-function insertMarkup(arrayImages) {
-  const result = createList(arrayImages);
- 
-  refs.gallery.insertAdjacentHTML('beforeend', result);
 
-}
 
 
   function clearGalleryList () {
